@@ -39,11 +39,22 @@ module SimpleTokenAuthentication
     end
 
     def token_param_name
-      "#{name_underscore}_token".to_sym
+      if SimpleTokenAuthentication.param_names["#{name_underscore}".to_sym].presence \
+        && token_param_name = SimpleTokenAuthentication.param_names["#{name_underscore}".to_sym][:authentication_token]
+        token_param_name
+      else
+        "#{name_underscore}_token".to_sym
+      end
+
     end
 
     def identifier_param_name
-      "#{name_underscore}_#{identifier}".to_sym
+      if SimpleTokenAuthentication.param_names["#{name_underscore}".to_sym].presence \
+        && identifier_param_name = SimpleTokenAuthentication.param_names["#{name_underscore}".to_sym][identifier]
+        identifier_param_name
+      else
+        "#{name_underscore}_#{identifier}".to_sym
+      end
     end
 
     def identifier
